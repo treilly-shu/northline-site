@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Header Options</title>
+  <style>
+    :root {
+      --espresso: #2A1D16; --roast: #3B2A20; --mocha: #6B4A36; --latte: #C9A88A;
+      --oat: #E8DCCB; --cream: #F4EDE1; --milk: #FBF7F0; --accent: #D9772B;
+      --serif: Georgia, "Times New Roman", serif;
+      --sans: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--cream); color: var(--roast); font-family: var(--sans); padding: 32px 16px 48px; }
+    .wrap { max-width: 1100px; margin: 0 auto; }
+    h1 { font-family: var(--serif); font-size: 2rem; margin: 0 0 6px; }
+    .intro { color: var(--mocha); margin: 0 0 32px; }
+    .option { margin-bottom: 40px; }
+    .option h2 { font-family: var(--serif); font-size: 1.35rem; margin: 0 0 4px; }
+    .option p { color: var(--mocha); margin: 0 0 12px; max-width: 46em; }
+    .tag { display: inline-block; font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; background: var(--accent); color: var(--espresso); padding: 3px 9px; border-radius: 999px; margin-left: 8px; vertical-align: 3px; }
+
+    /* A mock of the real header bar. */
+    .bar { background: var(--roast); color: var(--cream); border-radius: 14px; overflow: hidden; }
+    .bar-inner { display: flex; align-items: center; gap: 24px; min-height: 76px; padding: 0 28px; position: relative; }
+    .nav { margin-left: auto; display: flex; gap: 22px; font-size: .95rem; font-weight: 500; }
+    .nav span:first-child { border-bottom: 3px solid var(--accent); padding-bottom: 4px; font-weight: 700; }
+    .tagline { font-size: .9rem; color: var(--latte); white-space: nowrap; }
+    .wordmark { font-family: var(--serif); font-weight: 700; display: inline-flex; align-items: center; line-height: 1; }
+    .wordmark svg { display: block; }
+
+    /* 1. Sign with a clock */
+    .v1 .bar-inner { padding-left: 0; gap: 0; }
+    .v1 .seg { height: 4px; background: var(--accent); flex-shrink: 0; }
+    .v1 .seg-l { width: 28px; }
+    .v1 .seg-r { width: 44px; }
+    .v1 .stop { width: 16px; height: 16px; border-radius: 50%; background: var(--cream); border: 4px solid var(--accent); flex-shrink: 0; }
+    .v1 .sign { background: var(--cream); color: var(--roast); border-radius: 999px; padding: 8px 22px; font-size: 26px; flex-shrink: 0; }
+    .v1 .tagline { margin-left: 22px; }
+
+    /* 2. Route underline */
+    .v2 .stack { display: flex; flex-direction: column; gap: 8px; padding: 6px 0; }
+    .v2 .wordmark { font-size: 30px; color: var(--cream); }
+    .v2 .underline { display: flex; align-items: center; }
+    .v2 .underline .a { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); }
+    .v2 .underline .line { flex: 1; height: 3px; background: var(--accent); }
+    .v2 .underline .b { width: 13px; height: 13px; border-radius: 50%; background: var(--roast); border: 3px solid var(--accent); }
+    .v2 .tagline { align-self: flex-end; margin-bottom: 14px; }
+
+    /* 3. The clock is the stop */
+    .v3 .route { position: absolute; left: 0; width: 64px; top: 50%; height: 4px; margin-top: -2px; background: var(--accent); }
+    .v3 .clock { position: relative; width: 50px; height: 50px; border-radius: 50%; background: var(--cream); border: 4px solid var(--accent); display: flex; align-items: center; justify-content: center; margin-left: 36px; flex-shrink: 0; }
+    .v3 .wordmark { font-size: 28px; color: var(--cream); }
+
+    /* Small-size check */
+    .small-row { display: flex; flex-wrap: wrap; gap: 28px; align-items: flex-end; margin-top: 14px; }
+    .small-row figure { margin: 0; text-align: center; font-size: .8rem; color: var(--mocha); }
+    .tab-icon { width: 32px; height: 32px; }
+    .app-icon { width: 72px; height: 72px; border-radius: 16px; background: var(--roast); display: flex; align-items: center; justify-content: center; }
+
+    @media (max-width: 760px) {
+      .nav { display: none; }
+      .tagline { display: none; }
+      .v1 .seg-r { width: 24px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Reusable clock face for the "o", drawn with currentColor. -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="o-clock" viewBox="0 0 120 120">
+      <circle cx="60" cy="60" r="51" fill="none" stroke="currentColor" stroke-width="14"/>
+      <g stroke="currentColor" stroke-linecap="round">
+        <path d="M60 60L45.6 79.2" stroke-width="13"/>
+        <path d="M60 60L92 56.6" stroke-width="10"/>
+      </g>
+      <circle cx="60" cy="60" r="10" fill="#D9772B"/>
+    </symbol>
+    <symbol id="stop-clock" viewBox="0 0 120 120">
+      <g stroke="#3B2A20" stroke-linecap="round">
+        <path d="M60 12V26" stroke-width="9"/><path d="M108 60H94" stroke-width="6"/><path d="M60 108V94" stroke-width="6"/><path d="M12 60H26" stroke-width="6"/>
+        <path d="M60 60L45.6 79.2" stroke-width="11"/>
+        <path d="M60 60L95.8 56.2" stroke-width="8"/>
+      </g>
+      <circle cx="60" cy="60" r="9" fill="#D9772B"/>
+    </symbol>
+  </svg>
+
+  <div class="wrap">
+    <h1>Header options</h1>
+    <p class="intro">Option B (a clock as the "o" in Northline) combined with option D (the station sign and orange route line), in three versions. Each is shown as the real header bar, and below it at browser-tab and app-icon size.</p>
+
+    <section class="option">
+      <h2>1. Sign with a clock</h2>
+      <p>The cream station sign from D, with B's clock as the "o". The orange route line runs through the sign to a stop.</p>
+      <div class="bar v1">
+        <div class="bar-inner">
+          <span class="seg seg-l"></span>
+          <div class="sign wordmark">N<svg width="21" height="21" style="color:#3B2A20;margin:3px 1px 0"><use href="#o-clock"/></svg>rthline</div>
+          <span class="seg seg-r"></span><span class="stop"></span>
+          <div class="tagline">Good coffee before the 7:14</div>
+          <nav class="nav"><span>Home</span><span>Grind Tool</span><span>Brew Guides</span><span>Bean Guide</span></nav>
+        </div>
+      </div>
+      <div class="small-row">
+        <figure><svg class="tab-icon" viewBox="0 0 120 120"><rect width="120" height="120" rx="26" fill="#F4EDE1"/><g transform="translate(14 14) scale(.766)"><use href="#o-clock" style="color:#3B2A20"/></g></svg><figcaption>Tab icon</figcaption></figure>
+        <figure><div class="app-icon"><svg width="44" height="44" style="color:#F4EDE1"><use href="#o-clock"/></svg></div><figcaption>App icon</figcaption></figure>
+      </div>
+    </section>
+
+    <section class="option">
+      <h2>2. Route underline</h2>
+      <p>B's wordmark straight on the brown bar, with a short route line under it, stop to stop. Lighter and more refined.</p>
+      <div class="bar v2">
+        <div class="bar-inner">
+          <div class="stack">
+            <div class="wordmark">N<svg width="25" height="25" style="color:#F4EDE1;margin:3px 1px 0"><use href="#o-clock"/></svg>rthline</div>
+            <div class="underline"><span class="a"></span><span class="line"></span><span class="b"></span></div>
+          </div>
+          <div class="tagline">Good coffee before the 7:14</div>
+          <nav class="nav"><span>Home</span><span>Grind Tool</span><span>Brew Guides</span><span>Bean Guide</span></nav>
+        </div>
+      </div>
+      <div class="small-row">
+        <figure><svg class="tab-icon" viewBox="0 0 120 120"><rect width="120" height="120" rx="26" fill="#3B2A20"/><g transform="translate(14 14) scale(.766)"><use href="#o-clock" style="color:#F4EDE1"/></g></svg><figcaption>Tab icon</figcaption></figure>
+        <figure><div class="app-icon"><svg width="44" height="44" style="color:#F4EDE1"><use href="#o-clock"/></svg></div><figcaption>App icon</figcaption></figure>
+      </div>
+    </section>
+
+    <section class="option">
+      <h2>3. The clock is the stop <span class="tag">Recommended</span></h2>
+      <p>The route line comes in from the edge and stops at a clock-face station marker, then the wordmark. The boldest mark, and the circle works on its own as an icon.</p>
+      <div class="bar v3">
+        <div class="bar-inner">
+          <div class="route"></div>
+          <div class="clock"><svg width="34" height="34"><use href="#stop-clock"/></svg></div>
+          <div class="wordmark">Northline</div>
+          <div class="tagline">Good coffee before the 7:14</div>
+          <nav class="nav"><span>Home</span><span>Grind Tool</span><span>Brew Guides</span><span>Bean Guide</span></nav>
+        </div>
+      </div>
+      <div class="small-row">
+        <figure><svg class="tab-icon" viewBox="0 0 120 120"><circle cx="60" cy="60" r="54" fill="#F4EDE1" stroke="#D9772B" stroke-width="12"/><g transform="translate(18 18) scale(.7)"><use href="#stop-clock"/></g></svg><figcaption>Tab icon</figcaption></figure>
+        <figure><div class="app-icon"><svg width="54" height="54" viewBox="0 0 120 120"><circle cx="60" cy="60" r="54" fill="#F4EDE1" stroke="#D9772B" stroke-width="10"/><g transform="translate(18 18) scale(.7)"><use href="#stop-clock"/></g></svg></div><figcaption>App icon</figcaption></figure>
+      </div>
+    </section>
+  </div>
+</body>
+</html>

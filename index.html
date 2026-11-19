@@ -1,0 +1,478 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Northline Coffee</title>
+  <meta name="description" content="Northline Coffee: how much to grind, and how fine, before the 7:14.">
+  <meta name="theme-color" content="#3B2A20">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Ccircle cx='60' cy='60' r='53' fill='%23F4EDE1' stroke='%23D9772B' stroke-width='14'/%3E%3Cg stroke='%233B2A20' stroke-linecap='round'%3E%3Cpath d='M60 22V32' stroke-width='9'/%3E%3Cpath d='M60 60L48 76' stroke-width='12'/%3E%3Cpath d='M60 60L89 57' stroke-width='9'/%3E%3C/g%3E%3Ccircle cx='60' cy='60' r='8' fill='%23D9772B'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Shared drawings. Flat, in brand colors, drawn in code (PRD 7.6). -->
+  <svg width="0" height="0" class="sprite" aria-hidden="true" focusable="false">
+    <!-- Bean: one clean ellipse, a single-arc groove, and a soft shade on the right half. -->
+    <clipPath id="bean-clip"><ellipse cx="16" cy="16" rx="9.5" ry="13.5"/></clipPath>
+    <symbol id="bean" viewBox="0 0 32 32">
+      <g transform="rotate(35 16 16)">
+        <ellipse cx="16" cy="16" rx="9.5" ry="13.5" fill="currentColor"/>
+        <path d="M17 0Q12 16 17 32H32V0Z" fill="#000" opacity=".16" clip-path="url(#bean-clip)"/>
+        <path d="M17.2 3.2Q12.2 16 17.2 28.8" fill="none" stroke-width="1.6" stroke-linecap="round" style="stroke: var(--crease, #F4EDE1)"/>
+      </g>
+    </symbol>
+    <symbol id="icon-aeropress" viewBox="0 0 48 48">
+      <g fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round">
+        <path d="M19 3h10v6H19z"/><path d="M17 9h14v20H17z"/><path d="M14 29h20"/>
+        <path d="M12 33h24v7a4 4 0 0 1-4 4H16a4 4 0 0 1-4-4z"/>
+      </g>
+    </symbol>
+    <symbol id="icon-pourover" viewBox="0 0 48 48">
+      <g fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round">
+        <path d="M8 10h32l-10 16H18z"/><path d="M14 30h20"/>
+        <path d="M14 33h20v7a4 4 0 0 1-4 4H18a4 4 0 0 1-4-4z"/>
+      </g>
+    </symbol>
+    <symbol id="icon-drip" viewBox="0 0 48 48">
+      <g fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round">
+        <rect x="8" y="4" width="32" height="40" rx="3"/><path d="M8 14h32"/><path d="M20 14v4h8v-4"/>
+        <path d="M16 25h16v11a3 3 0 0 1-3 3H19a3 3 0 0 1-3-3z"/>
+      </g>
+    </symbol>
+    <symbol id="icon-frenchpress" viewBox="0 0 48 48">
+      <g fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round">
+        <circle cx="22" cy="4.5" r="2"/><path d="M22 7v18"/><path d="M14 25h16"/>
+        <rect x="12" y="12" width="20" height="32" rx="3"/>
+        <path d="M32 18h5a3 3 0 0 1 3 3v12a3 3 0 0 1-3 3h-5"/>
+      </g>
+    </symbol>
+    <symbol id="icon-coldbrew" viewBox="0 0 48 48">
+      <g fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round">
+        <rect x="14" y="3" width="20" height="7" rx="2"/>
+        <path d="M11 13h26v27a4 4 0 0 1-4 4H15a4 4 0 0 1-4-4z"/>
+        <rect x="17" y="24" width="7" height="7" rx="1.5"/><rect x="25" y="31" width="7" height="7" rx="1.5"/>
+      </g>
+    </symbol>
+  </svg>
+
+  <a class="skip-link" href="#content">Skip to content</a>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <!-- The logo: a route line runs into a clock-face station marker set on a subway-style sign. -->
+      <a class="brand clock-spin" href="#home" aria-label="Northline Coffee, home">
+        <span class="brand-line brand-line-in" aria-hidden="true"></span>
+        <span class="brand-clock" aria-hidden="true">
+          <svg viewBox="0 0 120 120" focusable="false">
+            <g stroke="#3B2A20" stroke-linecap="round">
+              <path d="M60 12V26" stroke-width="9"/><path d="M108 60H94" stroke-width="6"/><path d="M60 108V94" stroke-width="6"/><path d="M12 60H26" stroke-width="6"/>
+              <path class="hand-hour" d="M60 60L45.6 79.2" stroke-width="11"/>
+              <path class="hand-min" d="M60 60L95.8 56.2" stroke-width="8"/>
+            </g>
+            <circle cx="60" cy="60" r="9" fill="#D9772B"/>
+          </svg>
+        </span>
+        <span class="brand-sign">Northline</span>
+      </a>
+      <nav class="tabs" aria-label="Sections">
+        <ul>
+          <li><a href="#home" data-tab="home">Home</a></li>
+          <li><a href="#grind" data-tab="grind">Grind Tool</a></li>
+          <li><a href="#guides" data-tab="guides">Brew Guides</a></li>
+          <li><a href="#roasts" data-tab="roasts">Our Roasts</a></li>
+          <li><a href="#beans" data-tab="beans">Bean Guide</a></li>
+          <li><a href="#about" data-tab="about">About</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="content">
+    <noscript>
+      <p class="noscript">The grind tool needs JavaScript turned on. Everything else is below.</p>
+    </noscript>
+
+    <!-- ========== HOME ========== -->
+    <section class="view" data-route="home" aria-labelledby="home-title">
+      <div class="wrap hero">
+        <div class="hero-text">
+          <p class="eyebrow">Northline Coffee</p>
+          <h1 id="home-title" class="view-heading" tabindex="-1">Good coffee before the 7:14.</h1>
+          <p class="lede">Tell us what you're brewing. We'll tell you how much to grind and how fine.</p>
+          <div class="button-row">
+            <a class="btn btn-primary" href="#grind">Work out my grind</a>
+            <a class="btn btn-secondary" href="#roasts">See the roasts</a>
+          </div>
+        </div>
+        <div class="hero-art">
+          <img class="hero-photo" src="images/home-cup.jpg" width="1600" height="1069"
+               alt="A cup of coffee seen from above on a cream table, with a long morning shadow">
+          <!-- The 7:14 clock, as a badge on the photo. -->
+          <svg class="hero-clock clock-spin" viewBox="0 0 120 120" aria-hidden="true" focusable="false">
+            <circle cx="60" cy="60" r="56" fill="#FBF7F0"/>
+            <circle cx="60" cy="60" r="56" fill="none" stroke="#3B2A20" stroke-width="5"/>
+            <g stroke="#3B2A20" stroke-linecap="round">
+              <g stroke-width="5"><path d="M60 14V25"/><path d="M106 60H95"/><path d="M60 106V95"/><path d="M14 60H25"/></g>
+              <path class="hand-hour" d="M60 60L45.6 79.2" stroke-width="6"/>
+              <path class="hand-min" d="M60 60L95.8 56.2" stroke-width="4"/>
+            </g>
+            <g class="hand-sec">
+              <path d="M60 68V27" stroke="#D9772B" stroke-width="2" stroke-linecap="round"/>
+              <ellipse cx="60" cy="24" rx="3.4" ry="4.8" fill="#D9772B"/>
+            </g>
+            <circle cx="60" cy="60" r="4" fill="#D9772B"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="band">
+        <div class="wrap band-inner">
+          <div class="band-beans" aria-hidden="true">
+            <!-- A kraft bag of this week's roast. -->
+            <svg viewBox="0 0 160 200" focusable="false">
+              <defs>
+                <clipPath id="bag-clip"><path d="M30 44H130L136 184Q136 192 128 192H32Q24 192 24 184Z"/></clipPath>
+              </defs>
+              <rect x="32" y="20" width="96" height="26" rx="4" fill="#B8957A"/>
+              <rect x="32" y="20" width="96" height="26" rx="4" fill="#000" opacity=".08"/>
+              <g clip-path="url(#bag-clip)">
+                <rect x="20" y="40" width="120" height="160" fill="#C9A88A"/>
+                <rect x="96" y="40" width="44" height="160" fill="#000" opacity=".12"/>
+              </g>
+              <rect x="26" y="42" width="108" height="7" rx="3.5" fill="#6B4A36"/>
+              <rect x="46" y="80" width="68" height="84" rx="8" fill="#F4EDE1"/>
+              <rect x="46" y="80" width="68" height="84" rx="8" fill="none" stroke="#000" stroke-opacity=".06"/>
+              <use href="#bean" x="68" y="90" width="24" height="24" style="color:#6B4A36"/>
+              <text x="80" y="140" text-anchor="middle" font-family="Georgia, serif" font-weight="700" font-size="19" fill="#3B2A20">7:14</text>
+              <rect x="64" y="148" width="32" height="3" rx="1.5" fill="#D9772B"/>
+            </svg>
+          </div>
+          <div>
+            <p class="eyebrow eyebrow-light">This week's roast</p>
+            <h2 class="band-title">The 7:14</h2>
+            <p class="band-meta"><span class="pill pill-dark">Medium roast</span> Roasted Tuesday. Ready Thursday.</p>
+            <p class="band-taste">Chocolate, a little nutty, nothing to figure out.</p>
+            <a class="text-link text-link-light" href="#grind?roast=medium">Grind for this</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== GRIND TOOL ========== -->
+    <section class="view" data-route="grind" aria-labelledby="grind-title">
+      <div class="wrap">
+        <div class="view-head">
+          <div>
+            <p class="eyebrow">Grind Tool</p>
+            <h2 id="grind-title" class="view-heading" tabindex="-1">How much to grind, and how fine.</h2>
+            <p class="lede">Pick your roast, how much you're brewing, and how. We'll do the math.</p>
+          </div>
+          <!-- A hand grinder: crank, cap, body with an adjustment ring, base. -->
+          <svg class="head-art" viewBox="0 0 120 160" aria-hidden="true" focusable="false">
+            <defs>
+              <clipPath id="grinder-clip"><rect x="40" y="44" width="40" height="88" rx="10"/></clipPath>
+            </defs>
+            <path d="M60 24H98" stroke="#3B2A20" stroke-width="5" stroke-linecap="round"/>
+            <rect x="94" y="6" width="10" height="20" rx="5" fill="#D9772B"/>
+            <rect x="57" y="22" width="6" height="14" fill="#3B2A20"/>
+            <rect x="36" y="34" width="48" height="12" rx="6" fill="#6B4A36"/>
+            <g clip-path="url(#grinder-clip)">
+              <rect x="40" y="44" width="40" height="88" fill="#3B2A20"/>
+              <rect x="62" y="44" width="18" height="88" fill="#000" opacity=".22"/>
+            </g>
+            <rect x="37" y="86" width="46" height="9" rx="4.5" fill="#C9A88A"/>
+            <rect x="36" y="128" width="48" height="16" rx="6" fill="#6B4A36"/>
+            <ellipse cx="60" cy="152" rx="32" ry="4" fill="#3B2A20" opacity=".12"/>
+          </svg>
+        </div>
+
+        <div class="tool">
+          <form class="tool-inputs" id="grind-form" novalidate>
+            <fieldset class="field">
+              <legend class="field-label">Roast</legend>
+              <div class="seg" id="roast-options">
+                <input type="radio" name="roast" id="roast-light" value="light"><label for="roast-light">Light</label>
+                <input type="radio" name="roast" id="roast-medium" value="medium" checked><label for="roast-medium">Medium</label>
+                <input type="radio" name="roast" id="roast-dark" value="dark"><label for="roast-dark">Dark</label>
+              </div>
+            </fieldset>
+
+            <div class="field">
+              <label class="field-label" for="amount">How much water</label>
+              <div class="amount-row">
+                <input id="amount" name="amount" type="number" inputmode="decimal" min="0" step="any" value="12" aria-describedby="amount-hint">
+                <fieldset class="seg seg-small">
+                  <legend class="visually-hidden">Unit</legend>
+                  <input type="radio" name="unit" id="unit-oz" value="oz" checked><label for="unit-oz">oz</label>
+                  <input type="radio" name="unit" id="unit-ml" value="ml"><label for="unit-ml">ml</label>
+                </fieldset>
+              </div>
+              <p class="hint" id="amount-hint">The water you brew with. 4 to 64 oz (118 to 1,893 ml).</p>
+            </div>
+
+            <fieldset class="field">
+              <legend class="field-label">Brew method</legend>
+              <div class="method-options" id="method-options">
+                <!-- Built from the method table in app.js -->
+              </div>
+            </fieldset>
+          </form>
+
+          <section class="result" id="result" aria-labelledby="result-title">
+            <h3 id="result-title" class="visually-hidden">Your recipe</h3>
+
+            <div class="result-ok" id="result-ok">
+              <div class="beans">
+                <p class="beans-figure"><span id="out-beans">22</span><span class="beans-unit"> g</span></p>
+                <p class="beans-label">beans to grind</p>
+              </div>
+              <dl class="facts">
+                <div class="fact"><dt>Water</dt><dd id="out-water">355 g</dd></div>
+                <div class="fact"><dt>Grind</dt><dd id="out-grind">Medium-fine, like table salt</dd></div>
+                <div class="fact">
+                  <dt>Starting setting</dt>
+                  <dd>
+                    <span class="setting" id="out-setting">15</span> <span class="setting-scale">on a 1 to 40 grinder</span>
+                    <span class="note">Every grinder runs a little different. Sour cup: go finer next time. Bitter cup: go coarser.</span>
+                  </dd>
+                </div>
+                <div class="fact"><dt>Water temperature</dt><dd id="out-temp">200°F / 93°C</dd></div>
+                <div class="fact"><dt>Brew time</dt><dd id="out-time">3 to 4 minutes</dd></div>
+              </dl>
+              <div id="out-notes"></div>
+              <div class="copy-row">
+                <button type="button" class="btn btn-secondary btn-small" id="copy-btn">Copy recipe</button>
+                <span class="copy-status" id="copy-status" role="status"></span>
+              </div>
+            </div>
+
+            <div class="result-message" id="result-message" hidden>
+              <p id="out-message"></p>
+            </div>
+          </section>
+          <p class="visually-hidden" id="sr-summary" aria-live="polite" aria-atomic="true"></p>
+        </div>
+
+        <!-- Phone only: the number stays on screen while the inputs are being changed.
+             Screen readers get the live summary above instead, so this is hidden from them. -->
+        <div class="mini-result" id="mini-result" aria-hidden="true" hidden>
+          <p class="mini-text"><strong id="mini-beans">22 g</strong> <span id="mini-detail">Medium-fine · setting 15</span></p>
+          <button type="button" class="mini-btn" id="mini-btn" tabindex="-1">Full recipe</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== BREW GUIDES ========== -->
+    <section class="view" data-route="guides" aria-labelledby="guides-title">
+      <div class="wrap">
+        <p class="eyebrow">Brew Guides</p>
+        <h2 id="guides-title" class="view-heading" tabindex="-1">Five ways to brew.</h2>
+        <p class="lede">Each one fits on a card. The numbers come from the same table as the Grind Tool.</p>
+        <div class="card-grid" id="guide-list">
+          <!-- Built from the method table in app.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== OUR ROASTS ========== -->
+    <section class="view" data-route="roasts" aria-labelledby="roasts-title">
+      <div class="wrap">
+        <p class="eyebrow">Our Roasts</p>
+        <h2 id="roasts-title" class="view-heading" tabindex="-1">Three roasts. Pick by how you brew.</h2>
+        <div class="card-grid card-grid-3">
+          <article class="card roast-card">
+            <img class="card-photo" src="images/roast-light.jpg" width="1600" height="1200" loading="lazy"
+                 alt="Light brown roasted beans spilling from a burlap sack">
+            <h3>Platform Light</h3>
+            <p><span class="pill">Light</span></p>
+            <dl class="mini-facts">
+              <div><dt>How it tastes</dt><dd>Bright and clean, like a green apple.</dd></div>
+              <div><dt>Good for</dt><dd>Pour-over, AeroPress</dd></div>
+            </dl>
+            <a class="text-link" href="#grind?roast=light">Grind for this<span class="visually-hidden">: Platform Light</span></a>
+          </article>
+          <article class="card roast-card">
+            <img class="card-photo" src="images/roast-medium.jpg" width="1600" height="2400" loading="lazy"
+                 alt="A close view of medium brown roasted beans">
+            <h3>The 7:14</h3>
+            <p><span class="pill">Medium</span> <span class="tag">This week's roast</span></p>
+            <dl class="mini-facts">
+              <div><dt>How it tastes</dt><dd>Chocolate, a little nutty.</dd></div>
+              <div><dt>Good for</dt><dd>Any method</dd></div>
+            </dl>
+            <a class="text-link" href="#grind?roast=medium">Grind for this<span class="visually-hidden">: The 7:14</span></a>
+          </article>
+          <article class="card roast-card">
+            <img class="card-photo" src="images/roast-dark.jpg" width="1600" height="1572" loading="lazy"
+                 alt="Dark, glossy roasted beans in a white cup surrounded by more beans">
+            <h3>Last Train</h3>
+            <p><span class="pill">Dark</span></p>
+            <dl class="mini-facts">
+              <div><dt>How it tastes</dt><dd>Heavy, smoky, a little bittersweet.</dd></div>
+              <div><dt>Good for</dt><dd>French press, cold brew</dd></div>
+            </dl>
+            <a class="text-link" href="#grind?roast=dark">Grind for this<span class="visually-hidden">: Last Train</span></a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== BEAN GUIDE ========== -->
+    <section class="view" data-route="beans" aria-labelledby="beans-title">
+      <div class="wrap">
+        <div class="guide-top">
+          <div class="guide-intro">
+            <p class="eyebrow">Bean Guide</p>
+            <h2 id="beans-title" class="view-heading" tabindex="-1">What the words on the bag mean.</h2>
+            <p class="lede">Where it grew, what plant it came from, and what happened after picking. Search for any word, or pick a section.</p>
+          </div>
+          <div class="guide-search" id="guide-search">
+            <label for="guide-search-input" class="field-label">Search the guide</label>
+            <input type="search" id="guide-search-input" placeholder="Try gesha, honey, Kenya, peaberry" autocomplete="off" spellcheck="false"
+                   aria-controls="guide-search-results" aria-describedby="guide-search-status">
+            <p class="visually-hidden" id="guide-search-status" role="status"></p>
+            <ul class="search-results" id="guide-search-results" hidden></ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section tabs. They stay pinned under the site header while you scroll. -->
+      <div class="guide-tabs-bar" id="guide-tabs-bar">
+        <div class="wrap">
+          <div class="guide-tabs" role="tablist" aria-label="Bean Guide sections" id="guide-tabs">
+            <button type="button" role="tab" id="gtab-map" data-view="map" aria-controls="gpanel-map" aria-selected="true">Map</button>
+            <button type="button" role="tab" id="gtab-varieties" data-view="varieties" aria-controls="gpanel-varieties" aria-selected="false" tabindex="-1">Varieties</button>
+            <button type="button" role="tab" id="gtab-processing" data-view="processing" aria-controls="gpanel-processing" aria-selected="false" tabindex="-1">Processing</button>
+            <button type="button" role="tab" id="gtab-basics" data-view="basics" aria-controls="gpanel-basics" aria-selected="false" tabindex="-1">Basics</button>
+            <button type="button" role="tab" id="gtab-glossary" data-view="glossary" aria-controls="gpanel-glossary" aria-selected="false" tabindex="-1">Glossary</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="wrap">
+        <!-- MAP -->
+        <div class="guide-panel" role="tabpanel" id="gpanel-map" aria-labelledby="gtab-map" data-view="map">
+          <p class="panel-intro">Coffee grows in a band around the equator, between the tropics. Pick a region to zoom in, or a pin to see what a country grows.</p>
+          <div class="coffee-map" id="coffee-map">
+            <div class="map-controls">
+              <div class="map-regions" id="map-regions" role="group" aria-label="Zoom the map to a region"></div>
+              <label class="map-select">
+                <span>Jump to a country</span>
+                <select id="map-country-select"></select>
+              </label>
+            </div>
+            <div class="map-frame" id="map-frame">
+              <svg class="map-svg" id="map-svg" role="img" aria-labelledby="map-svg-title" preserveAspectRatio="none">
+                <title id="map-svg-title">Dot map of the world with the coffee belt shaded between the tropics</title>
+              </svg>
+              <div class="map-pins" id="map-pins"></div>
+              <p class="map-legend" aria-hidden="true"><span class="legend-belt"></span>Coffee belt <span class="legend-pin"></span>Growing country</p>
+            </div>
+            <div class="map-panel" id="map-panel" aria-live="polite"></div>
+          </div>
+        </div>
+
+        <!-- VARIETIES -->
+        <div class="guide-panel" role="tabpanel" id="gpanel-varieties" aria-labelledby="gtab-varieties" data-view="varieties" hidden>
+          <p class="panel-intro">A variety is a type of coffee plant, the way Granny Smith is a type of apple. Pick one to read about it.</p>
+          <div class="filter-bar" id="variety-filters" role="group" aria-label="Filter varieties by region"></div>
+          <p class="filter-status" id="variety-count" role="status"></p>
+          <div class="master-detail">
+            <div class="tile-list" id="variety-list"></div>
+            <div class="detail-col" id="variety-detail-home">
+              <div class="detail" id="variety-detail" aria-live="polite"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PROCESSING -->
+        <div class="guide-panel" role="tabpanel" id="gpanel-processing" aria-labelledby="gtab-processing" data-view="processing" hidden>
+          <p class="panel-intro">A coffee bean is the seed of a cherry. Processing is how the farm gets the fruit off and dries the seed. Pick a process to see what it strips off, and how it tastes.</p>
+          <div class="process-picker" id="process-picker" role="group" aria-label="Pick a process"></div>
+          <div class="master-detail process-layout">
+            <div class="cherry" id="cherry">
+              <svg class="cherry-art" id="cherry-art" viewBox="0 0 400 250" role="group" aria-labelledby="cherry-title">
+                <title id="cherry-title">Cross-section of a coffee cherry. Pick a part to learn what it is.</title>
+                <g class="part" data-part="skin"><ellipse cx="130" cy="125" rx="100" ry="116" fill="#8C3A2B"/></g>
+                <g class="part" data-part="pulp"><ellipse cx="130" cy="125" rx="89" ry="104" fill="#D9A48A"/></g>
+                <g class="part" data-part="mucilage"><ellipse cx="130" cy="125" rx="71" ry="85" fill="#EBD3BE"/></g>
+                <g class="part" data-part="parchment"><ellipse cx="130" cy="125" rx="63" ry="77" fill="#F4EDE1" stroke="#C9A88A" stroke-width="1.5"/></g>
+                <g class="part" data-part="bean">
+                  <path d="M127 59A52 66 0 0 0 127 191Z" fill="#B7BC98"/>
+                  <path d="M133 59A52 66 0 0 1 133 191Z" fill="#A9AF8A"/>
+                  <!-- The center cut: a small fold on each bean's flat side. -->
+                  <path d="M127 117q-9 8 0 16" fill="none" stroke="#7F8566" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M133 117q9 8 0 16" fill="none" stroke="#7F8566" stroke-width="2" stroke-linecap="round"/>
+                </g>
+                <g class="part part-stroke" data-part="silverskin">
+                  <path d="M127 59A52 66 0 0 0 127 191Z" fill="none" stroke="#E6E7D8" stroke-width="4"/>
+                  <path d="M133 59A52 66 0 0 1 133 191Z" fill="none" stroke="#E6E7D8" stroke-width="4"/>
+                </g>
+                <g id="cherry-labels"></g>
+              </svg>
+              <p class="peel-key" id="peel-key" aria-hidden="true" hidden><span class="peel-key-dot"></span>Faded layers come off before the coffee dries</p>
+              <p class="cherry-step-caption" id="cherry-step-caption" aria-live="polite"></p>
+              <div class="cherry-info" id="cherry-info" aria-live="polite"></div>
+            </div>
+            <div class="detail-col">
+              <div class="detail" id="process-detail" aria-live="polite"></div>
+            </div>
+          </div>
+          <details class="compare">
+            <summary>Compare all eight processes side by side</summary>
+            <div class="compare-scroll"><table class="compare-table" id="process-compare"></table></div>
+          </details>
+        </div>
+
+        <!-- BASICS -->
+        <div class="guide-panel" role="tabpanel" id="gpanel-basics" aria-labelledby="gtab-basics" data-view="basics" hidden>
+          <h3 class="panel-heading">Arabica, robusta, and the rest</h3>
+          <div class="card-grid card-grid-3 compact-cards" id="species-list"></div>
+          <h3 class="panel-heading">How arabica got around</h3>
+          <ol class="timeline" id="origin-timeline"></ol>
+          <h3 class="panel-heading">What it means for roasting and brewing</h3>
+          <div class="rule-grid" id="rule-list"></div>
+        </div>
+
+        <!-- GLOSSARY -->
+        <div class="guide-panel" role="tabpanel" id="gpanel-glossary" aria-labelledby="gtab-glossary" data-view="glossary" hidden>
+          <div class="glossary-filter">
+            <label for="glossary-filter-input" class="field-label">Filter the glossary</label>
+            <input type="search" id="glossary-filter-input" placeholder="Type a word" autocomplete="off" aria-describedby="glossary-count">
+            <p class="filter-status" id="glossary-count" role="status"></p>
+          </div>
+          <dl class="glossary" id="glossary-list"></dl>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== ABOUT ========== -->
+    <section class="view" data-route="about" aria-labelledby="about-title">
+      <div class="wrap about">
+        <div class="about-text">
+          <p class="eyebrow">About</p>
+          <h2 id="about-title" class="view-heading" tabindex="-1">Roasted for people with a train to catch.</h2>
+          <p>Northline is a small-batch roaster. We make three coffees, a light, a medium, and a dark, and we keep them simple enough to brew half awake.</p>
+          <p>We roast on Tuesdays. It's ready by Thursday. That's the whole schedule, and we stick to it.</p>
+          <p class="credits">Photos by Jakub Dziubak, Maxim Tatarinov, Fatih Mehmet Y&#305;ld&#305;z, Thomas Griggs, Beau Carpenter, and Hrushi Chavhan on Unsplash, and Marta Dzedyshko, Thirdman, bacho nadiradze, and mehmetography on Pexels.</p>
+        </div>
+        <div class="about-art">
+          <img class="about-photo" src="images/about-beans.jpg" width="1600" height="2400" loading="lazy"
+               alt="Someone in a brown apron holding open a bag of freshly roasted beans">
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <p><span class="footer-brand">Northline Coffee</span> Roasted Tuesday. Ready Thursday.</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+  <script src="beans.js"></script>
+  <script src="map.js"></script>
+</body>
+</html>
